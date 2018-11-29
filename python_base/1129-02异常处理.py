@@ -1,6 +1,6 @@
 #!usr/bin/env python
 # _*_ coding:utf-8 _*_
-
+"""
 学习目标
     掌握异常处理的机制和方法
     
@@ -27,27 +27,27 @@ b.常见的异常
     
     3.IO Error
         FileNotFoundError
-            >>> p = open('/home/cbd.a')
+#            >>> p = open('/home/cbd.a')
             Traceback (most recent call last):
             File "<stdin>", line 1, in <module>
             FileNotFoundError: [Errno 2] No such file or directory: '/home/cbd.a'
-            >>>
+#            >>>
             
     4.ZeroDvisionError
         除数为0
-            >>> 1/0
+#            >>> 1/0
             Traceback (most recent call last):
             File "<stdin>", line 1, in <module>
             ZeroDivisionError: division by zero
-            >>>
+#            >>>
             
     5.ValueError
         值有问题
-            >>> int('a')
+#            >>> int('a')
             Traceback (most recent call last):
             File "<stdin>", line 1, in <module>
             ValueError: invalid literal for int() with base 10: 'a'
-            >>>
+#            >>>
 
 
 
@@ -101,8 +101,16 @@ c.异常的处理方式
 
 
 
+"""
+import datetime
 
-
+try:
+    abs('g')
+except TypeError as e:
+    print('get nameError')
+    print(datetime.datetime.now().strftime('%Y-%m-%D %H:%M:%S'), e)
+finally:
+    print('print finally')
 
 
 

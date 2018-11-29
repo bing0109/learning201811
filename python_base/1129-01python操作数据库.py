@@ -34,7 +34,7 @@ b.python操作 myqsl数据库
 	2.操作数据库
 	import pymysql
 	conn = pymysql.connect(host = 'localhost',user='root',passwd='root',db='sakila',port=3306,charset='utf8')
-		#host		连接数据库所在服务器的ip
+    	#host		连接数据库所在服务器的ip
 		#user		数据库的用户名
 		#passwd		数据库的密码
 		#db			数据库名称
