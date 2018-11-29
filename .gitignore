@@ -1,0 +1,7 @@
+.idea/
+Linux/
+Tool
+venv/
+.git
+python_base/.idea/
+python_base/.git/
