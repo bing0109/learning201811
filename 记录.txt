@@ -59,13 +59,7 @@ https://blog.csdn.net/zhengchaooo/article/details/79500032
 Git
 https://github.com/
 bing0109
-chen_261624@163.comcjb567601
 https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
 
 Administrator@USER-20180705RP MINGW64 ~
 $ git config --global user.name "bing"
-
-Administrator@USER-20180705RP MINGW64 ~
-$ git config --global user.email "chen_261624@163.com"
-
-Administrator@USER-20180705RP MINGW64 ~
