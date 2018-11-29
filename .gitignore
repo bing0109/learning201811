@@ -1,7 +1,13 @@
-.idea/
-Linux/
-Tool
+
+#windows:
 venv/
-.git
+
+
+#big file:
+Linux/
+Tool/
+
+#python relate:
 python_base/.idea/
 python_base/.git/
+.idea/
