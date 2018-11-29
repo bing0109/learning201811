@@ -32,10 +32,67 @@
 		
 	后端：
 		web服务器
+            apache  不支持java，曾经最火的一款
+            nginx   当前最火的一款，轻量级web服务器，
+            tomcat  支持java
+            IIS     微软的
+            
 		数据库服务器
+            oracle  
+            mysql
+            SQLserver
 		
-		
+        操作系统
+            unix
+            linux
+            windows
+            
+            
+3.常见架构的搭配
+    操作系统            web服务器          数据库服务器
+    Windows             IIS                 SqlServer、access、mysql
+                        Apache              mysql
+    
+    linux               Apache              mysql       (LAMP)
+                        nginx               mysql       (LAMP)
+                        Tomcat              mysql
 
+
+
+4.访问地址过程
+    a.URL (统一资源管理器)
+        http://www.ppp.com:8080/www/index.php?id=10
+        
+        1.协议            http
+        2.域名            www.ppp.com
+        3.端口            8080(如果是默认的80就不用写，80以外的就要写)
+        4.虚拟目录        www
+        5.访问文件        index.php
+        6.访问文件的参数  id=10
+
+    b.协议
+        http协议：超文本传输协议
+            超文本：声音、图像、视频。又称 富文本，对应普通文本
+            
+            http协议规定网络中数据怎样进行传输，先传什么，后传什么，怎样传
+            
+            http协议的请求
+                get     主要用于浏览  我要什么，请求信息显示在url上
+                    https://s.taobao.com/search?q=nike
+                    https://s.taobao.com/search?q=zara
+                    
+                post    主要用于提交  我给什么，请求信息显示在请求体里面
+                
+            http协议特点：
+                无状态（彼此不记录过去的行为）
+                
+        cookie&session
+            cookie
+            
+            
+                
+    
+            
 
 
 
