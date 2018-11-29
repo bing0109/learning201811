@@ -1,0 +1,60 @@
+1.常用软件架构
+	QQ、酷狗、抖音
+
+	a. 单机
+		不需要网络就可以执行的应用程序
+		
+	b. B/S架构软件
+		B：browser 浏览器
+			IE、chrome、firefox、safari、360浏览器
+				chrome 		开发用的多
+				firefox 	测试用的多
+	
+		S：server 服务器
+		
+			
+	c. C/S架构软件
+		C：client 客户端
+			移动端		手机，ipad
+			PC端		台式、笔记本电脑
+			
+		S：server
+		
+2.B/S架构的后台
+	前端：
+		html	静态页面	标记性语言
+		css		样式表		文字、图片变色
+		js		动态页面（javascrip，与java无关）	jquery
+				java 	后端
+				jsp		java server page	
+
+		ui		user interface
+		
+	后端：
+		web服务器
+		数据库服务器
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
