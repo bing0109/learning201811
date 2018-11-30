@@ -13,8 +13,10 @@ print('*********************************************************')
 def thread_job1():
     print('当前线程1是%s' %threading.current_thread())
 
+
 def thread_job2():
     print('当前线程2是%s' %threading.current_thread())
+
 
 thread1 = threading.Thread(target=thread_job1())
 thread2 = threading.Thread(target=thread_job2())
@@ -48,7 +50,8 @@ print('finish')
 
 print('*********************************************************')
 
-#线程锁--效果不太明显
+
+# 线程锁--效果不太明显
 def job1():
     global a, lock
     lock.acquire()

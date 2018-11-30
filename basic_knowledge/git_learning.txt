@@ -32,6 +32,336 @@ https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b
 		
 		
 
-		
-		
-		
+3.创建版本库
+    Git Bash窗口，在合适的目录下执行命令
+    $ git init
+    Initialized empty Git repository in /Users/michael/learngit/.git/
+	瞬间Git就把仓库建好了，而且告诉你是一个空的仓库（empty Git repository）
+    
+
+    
+4.添加和提交文件
+    例如在learngit目录下添加了readme.txt文件
+    $ git add readme.txt    #无回显
+    $ git commit -m 'wrote a readme.txt file'
+    回显如下：
+    [master (root-commit) eaadf4e] wrote a readme file
+    1 file changed, 2 insertions(+)
+    create mode 100644 readme.txt
+    
+        -m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的
+    
+    
+	$ git add file1.txt
+    $ git add file2.txt file3.txt
+    $ git commit -m "add 3 files."
+    
+    
+    
+5.日志和版本回退
+    #查看日志
+    $ git log                       输出信息较多，略显混乱
+    $ git log --pretty=oneline      输出信息整齐点
+    
+    # 需要友情提示的是，你看到的一大串类似1094adb...的是commit id（版本号），和SVN不一样，Git的commit id不是1，2，3……递增的数字，而是一个SHA1计算出来的一个非常大的数字，用十六进制表示，而且你看到的commit id和我的肯定不一样，以你自己的为准。为什么commit id需要用这么一大串数字表示呢？因为Git是分布式的版本控制系统，后面我们还要研究多人在同一个版本库里工作，如果大家都用1，2，3……作为版本号，那肯定就冲突了。
+    
+    
+    上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
+
+    现在，我们要把当前版本append GPL回退到上一个版本add distributed，就可以使用git reset命令：
+
+    $ git reset --hard HEAD^
+    HEAD is now at e475afc add distributed
+    
+    当你用$ git reset --hard HEAD^回退到add distributed版本时，再想恢复到append GPL，就必须找到append GPL的commit id。Git提供了一个命令git reflog用来记录你的每一次命令：
+
+    $ git reflog
+    e475afc HEAD@{1}: reset: moving to HEAD^
+    1094adb (HEAD -> master) HEAD@{2}: commit: append GPL
+    e475afc HEAD@{3}: commit: add distributed
+    eaadf4e HEAD@{4}: commit (initial): wrote a readme file
+    
+    
+6.工作区和缓存区
+    工作区（Working Directory）：
+        就是你在电脑里能看到的目录，比如上面的learngit文件夹就是一个工作区
+    
+    版本库（Repository）：
+        工作区有一个隐藏目录.git，这个不算工作区，而是Git的版本库。
+    
+        Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。
+    
+    
+    git status
+    查看状态
+        Changes not staged for commit:      这下面的文件是修改过的文件，等待--add--commit
+        Untracked files:                    这下面的文件是从来没提交过的文件，等待--add--commit
+        Changes to be committed:            这下面的文件是已经 add 了，但没 commit，等待commit
+        
+        
+    git add命令实际上就是把要提交的所有修改放到暂存区（Stage），然后，执行git commit就可以一次性把暂存区的所有修改提交到分支
+    
+    第一次修改 -> git add -> 第二次修改 -> git commit
+        第一次修改提交了，第二次修改不会提交
+    
+    第一次修改 -> git add -> 第二次修改 -> git add -> git commit
+        两次修改都提交了
+        
+        
+7.撤销修改
+    git checkout -- file可以丢弃工作区的修改
+    
+    命令git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
+
+    一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+    
+    一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+
+    总之，就是让这个文件回到最近一次git commit或git add时的状态。
+    
+    git checkout -- file命令中的--很重要，没有--，就变成了“切换到另一个分支”的命令
+    
+    
+    另一种情况是：
+        修改readme.txt后，git add添加到了暂存区，还没commit，想恢复到修改前，需要如下两步
+            1. git reset HEAD readme.txt 可以把暂存区的修改撤销掉（unstage），重新放回工作区
+            2. git checkout -- readme.txt 丢弃工作区的修改
+    
+    
+    再一种情况是，修改后已经提交了，就适用于版本回退了
+    
+    
+    
+    
+8.删除文件
+    git rm readme.txt
+    
+    恢复文件
+        git checkout -- readme.txt
+    
+    
+    
+9.远程仓库
+    Git是分布式版本控制系统，同一个Git仓库，可以分布到不同的机器上。怎么分布呢？最早，肯定只有一台机器有一个原始版本库，此后，别的机器可以“克隆”这个原始版本库，而且每台机器的版本库其实都是一样的，并没有主次之分。
+    为提高代码更新效率，通常找一台电脑充当服务器的角色，每天24小时开机，其他每个人都从这个“服务器”仓库克隆一份到自己的电脑上，并且各自把各自的提交推送到服务器仓库里，也从服务器仓库中拉取别人的提交。
+    
+    GitHub，神奇的网站，从名字就可以看出，这个网站就是提供Git仓库托管服务的，所以，只要注册一个GitHub账号，就可以免费获得Git远程仓库。
+    
+    1、注册Github
+        用户名、邮箱
+    
+    2、创建SSH Key。
+    在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key：
+        2.1$ ssh-keygen -t rsa -C "youremail@example.com"
+            然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码
+   
+        2.2登陆GitHub，打开“Account settings”，“SSH Keys”页面：
+            然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容：
+    
+10.添加远程库
+    现在的情景是，你已经在本地创建了一个Git仓库后，又想在GitHub创建一个Git仓库，并且让这两个仓库进行远程同步，这样，GitHub上的仓库既可以作为备份，又可以让其他人通过该仓库来协作
+    1、在github上创建Repository 
+    2、在本地的learngit仓库下运行命令：
+        $ git remote add origin git@github.com:michaelliao/learngit.git
+
+    3、把本地库的所有内容推送到远程库上：
+        $ git push -u origin master
+            注意：由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+                    后面再只执行$ git push origin master即可
+            
+            
+11.从远程库克隆
+    假设我们从零开发，那么最好的方式是先创建远程库，然后，从远程库克隆。
+
+        1、首先，登陆GitHub，创建一个新的仓库，名字叫gitskills：
+    
+        2、下一步是用命令git clone克隆一个本地库：
+            $ git clone git@github.com:michaelliao/gitskills.git
+    
+            注意：GitHub给出的地址不止一个，还可以用https://github.com/michaelliao/gitskills.git这样的地址。实际上，Git支持多种协议，默认的git://使用ssh，但也可以使用https等其他协议。
+
+                  使用https除了速度慢以外，还有个最大的麻烦是每次推送都必须输入口令，但是在某些只开放http端口的公司内部就无法使用ssh协议而只能用https。
+
+
+
+12.分支
+    1、创建分支
+        我们创建dev分支，然后切换到dev分支：
+            $ git checkout -b dev
+                说明：git checkout命令加上-b参数表示创建并切换，相当于以下两条命令：
+                    $ git branch dev
+                    $ git checkout dev
+
+    2、查看分支
+        git branch命令查看当前分支：
+        
+        $ git branch
+        * dev
+        master
+        git branch命令会列出所有分支，当前分支前面会标一个*号。
+
+    3、合并分支
+        $ git merge dev
+        注意：git merge命令用于合并指定分支到当前分支。如果要合并dev到master，需先切换到master分支
+        
+    4、删除分支
+        合并完成后，就可以放心地删除dev分支了：
+        $ git branch -d dev    
+
+    
+    5、小结
+        查看分支：git branch
+        
+        创建分支：git branch <name>
+        
+        切换分支：git checkout <name>
+        
+        创建+切换分支：git checkout -b <name>
+        
+        合并某分支到当前分支：git merge <name>
+        
+        删除分支：git branch -d <name>
+
+
+
+13、解决冲突
+    
+    git merge dev
+        当dev、master都对文件有修改时，Git无法执行“快速合并”，只能试图把各自的修改合并起来，但这种合并就可能会有冲突，执行命令后会提示有冲突
+    
+    
+    git status也可以告诉我们冲突的文件详情
+        Git用<<<<<<<，=======，>>>>>>>标记出不同分支的内容
+    
+    手动解决冲突后，重新合并分支即可
+    
+    
+14、分支管理策略
+
+    通常，合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。
+    
+    如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。
+    
+    准备合并dev分支，请注意--no-ff参数，表示禁用Fast forward：
+    
+        $ git merge --no-ff -m "merge with no-ff" dev
+        Merge made by the 'recursive' strategy.
+        readme.txt | 1 +
+        1 file changed, 1 insertion(+)
+        
+        因为本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。
+    
+            合并后，我们用git log看看分支历史：
+            
+            $ git log --graph --pretty=oneline --abbrev-commit
+            *   e1e9c68 (HEAD -> master) merge with no-ff
+            |\  
+            | * f52c633 (dev) add merge
+            |/  
+            *   cf810e4 conflict fixed
+            ...
+
+    
+    分支策略
+        在实际开发中，我们应该按照几个基本原则进行分支管理：
+        
+        首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+        
+        那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；
+        
+        你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。
+    
+        合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
+    
+    
+15、Bug分支
+    软件开发中，bug就像家常便饭一样。有了bug就需要修复，在Git中，由于分支是如此的强大，所以，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。
+    
+    当你接到一个修复一个代号101的bug的任务时，很自然地，你想创建一个分支issue-101来修复它，但是，等等，当前正在dev上进行的工作还没有提交
+
+    并不是你不想提交，而是工作只进行到一半，还没法提交，预计完成还需1天时间。但是，必须在两个小时内修复该bug，怎么办？
+
+    幸好，Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作：
+
+    $ git stash
+    Saved working directory and index state WIP on dev: f52c633 add merge
+    现在，用git status查看工作区，就是干净的（除非有没有被Git管理的文件），因此可以放心地创建分支来修复bug。
+    
+    首先确定要在哪个分支上修复bug，假定需要在master分支上修复，就从master创建临时分支：
+    $ git checkout master
+    $ git checkout -b issue-101
+
+    现在修复bug，然后提交：
+    $ git add readme.txt 
+    $ git commit -m "fix bug 101"
+    
+    修复完成后，切换到master分支，并完成合并，最后删除issue-101分支：
+    $ git checkout master
+    $ git merge --no-ff -m "merged bug fix 101" issue-101
+    
+    现在，是时候接着回到dev分支干活了！
+    $ git checkout dev
+    $ git status
+    工作区是干净的，刚才的工作现场存到哪去了？用git stash list命令看看：
+    
+    $ git stash list
+    stash@{0}: WIP on dev: f52c633 add merge
+        工作现场还在，Git把stash内容存在某个地方了，但是需要恢复一下，有两个办法：
+        1.一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
+        2.另一种方式是用git stash pop，恢复的同时把stash内容也删了：
+    
+    $ git stash pop
+    
+    再用git stash list查看，就看不到任何stash内容了：
+    
+    $ git stash list
+    你可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：
+    
+    $ git stash apply stash@{0}
+
+
+
+
+16、Feature分支
+    软件开发中，总有无穷无尽的新的功能要不断添加进来。
+
+    添加一个新功能时，你肯定不希望因为一些实验性质的代码，把主分支搞乱了，所以，每添加一个新功能，最好新建一个feature分支，在上面开发，完成后，合并，最后，删除该feature分支。
+
+    
+    一切顺利的话，feature分支和bug分支是类似的，拉分支，修改代码，提交代码到新拉的分支，切回原分支，合并，然后删除。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

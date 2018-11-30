@@ -5,6 +5,14 @@ https://www.cnblogs.com/pengsixiong/p/4823473.html
 Python面向对象静态方法，类方法，属性方法
 https://www.cnblogs.com/revo/p/7381101.html
 
+
+【数据分析】谁说菜鸟不会数据分析入门篇.pdf
 http://www.cnblogs.com/fly-bird/articles/9483314.html
 
+
 https://zhidao.baidu.com/question/307705907830687444.html
+
+
+Python yield 使用浅析
+https://www.ibm.com/developerworks/cn/opensource/os-cn-python-yield/
+
