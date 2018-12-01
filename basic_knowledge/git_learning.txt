@@ -630,6 +630,23 @@ git fetch和git pull的区别
     
     
     
+git有些命令识别不出远程的非master分支：
+    参考：https://blog.csdn.net/guo_hongjun1611/article/details/54407293
     
+    问题：
+    $ git diff github/dev1201
+    fatal: ambiguous argument 'github/dev1201': unknown revision or path not in the working tree.
+    Use '--' to separate paths from revisions, like this:
+    'git <command> [<revision>...] -- [<file>...]'
+
+    解决办法：
+    $ git remote show origin
+    $ git remote update
     
+    恢复正常
+    $ git diff dev1201 github/dev1201 --name-only
+    .gitignore
+    README.md
+    basic_knowledge/git_learning.txt
+
     
