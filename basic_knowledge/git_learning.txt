@@ -2,7 +2,7 @@
 
 
 https://blog.csdn.net/zxy987872674/article/details/72491066
-二. 创建和删除分支：
+创建和删除分支：
 
 在本地新建一个分支： git branch newBranch 
 切换到你的新分支: git checkout newBranch 
