@@ -1,4 +1,22 @@
 
+
+
+https://blog.csdn.net/zxy987872674/article/details/72491066
+二. 创建和删除分支：
+
+在本地新建一个分支： git branch newBranch 
+切换到你的新分支: git checkout newBranch 
+将新分支发布在github上： git push origin newBranch 
+在本地删除一个分支： git branch -d newBranch 
+在github远程端删除一个分支： git push origin :newBranch (分支名前的冒号代表删除) 
+/git push origin –delete newBranch 
+注意删除远程分支后，如果有对应的本地分支，本地分支并不会同步删除！
+
+
+
+
+
+
 参考资料
 https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
 
@@ -327,9 +345,9 @@ https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b
 
     添加一个新功能时，你肯定不希望因为一些实验性质的代码，把主分支搞乱了，所以，每添加一个新功能，最好新建一个feature分支，在上面开发，完成后，合并，最后，删除该feature分支。
 
-    
     一切顺利的话，feature分支和bug分支是类似的，拉分支，修改代码，提交代码到新拉的分支，切回原分支，合并，然后删除。
 
+    要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除（如经费不足导致开发的新特性需要删除的时候）
 
 
 
